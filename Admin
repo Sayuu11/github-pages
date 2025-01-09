@@ -1,99 +1,135 @@
+-- GUI Creation Script
 local ScreenGui = Instance.new("ScreenGui")
-local Frame = Instance.new("Frame")
-local AdminPanelLabel = Instance.new("TextLabel")
-local PlayerStats = Instance.new("Frame")
+local MainFrame = Instance.new("Frame")
+local WelcomeLabel = Instance.new("TextLabel")
+local PlayerStatsFrame = Instance.new("Frame")
 local PlayersLabel = Instance.new("TextLabel")
-local FavouritesLabel = Instance.new("TextLabel")
+local FavoritesLabel = Instance.new("TextLabel")
 local UptimeLabel = Instance.new("TextLabel")
+local AdminListFrame = Instance.new("Frame")
+local AdminTitleLabel = Instance.new("TextLabel")
 local AdminList = Instance.new("ScrollingFrame")
-local AdminLabelTemplate = Instance.new("TextLabel")
+local AdminTemplate = Instance.new("Frame")
+local AdminNameLabel = Instance.new("TextLabel")
+local AdminRoleLabel = Instance.new("TextLabel")
 local MessagesFrame = Instance.new("Frame")
-local MessageTitle = Instance.new("TextLabel")
-local MessageContent = Instance.new("TextLabel")
+local MessageTitleLabel = Instance.new("TextLabel")
+local MessageContentLabel = Instance.new("TextLabel")
 
 -- Parent to PlayerGui
 ScreenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
 
 -- Main Frame
-Frame.Parent = ScreenGui
-Frame.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
-Frame.Size = UDim2.new(0, 600, 0, 400)
-Frame.Position = UDim2.new(0.5, -300, 0.5, -200)
+MainFrame.Parent = ScreenGui
+MainFrame.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
+MainFrame.Size = UDim2.new(0, 800, 0, 500)
+MainFrame.Position = UDim2.new(0.5, -400, 0.5, -250)
 
--- Admin Panel Label
-AdminPanelLabel.Parent = Frame
-AdminPanelLabel.Size = UDim2.new(0, 200, 0, 50)
-AdminPanelLabel.Position = UDim2.new(0.05, 0, 0.05, 0)
-AdminPanelLabel.Text = "Welcome Back, Admin"
-AdminPanelLabel.Font = Enum.Font.SourceSansBold
-AdminPanelLabel.TextSize = 20
-AdminPanelLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+-- Welcome Label
+WelcomeLabel.Parent = MainFrame
+WelcomeLabel.Text = "Welcome Back, Admin"
+WelcomeLabel.Font = Enum.Font.SourceSansBold
+WelcomeLabel.TextSize = 24
+WelcomeLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+WelcomeLabel.Size = UDim2.new(0, 400, 0, 50)
+WelcomeLabel.Position = UDim2.new(0.05, 0, 0.05, 0)
 
 -- Player Stats Frame
-PlayerStats.Parent = Frame
-PlayerStats.Size = UDim2.new(0, 200, 0, 100)
-PlayerStats.Position = UDim2.new(0.05, 0, 0.2, 0)
-PlayerStats.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
+PlayerStatsFrame.Parent = MainFrame
+PlayerStatsFrame.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+PlayerStatsFrame.Size = UDim2.new(0, 300, 0, 100)
+PlayerStatsFrame.Position = UDim2.new(0.05, 0, 0.2, 0)
 
-PlayersLabel.Parent = PlayerStats
+PlayersLabel.Parent = PlayerStatsFrame
 PlayersLabel.Text = "Players: 25"
-PlayersLabel.Size = UDim2.new(1, 0, 0.3, 0)
-PlayersLabel.TextColor3 = Color3.fromRGB(200, 200, 200)
-PlayersLabel.TextSize = 16
+PlayersLabel.Font = Enum.Font.SourceSans
+PlayersLabel.TextSize = 18
+PlayersLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+PlayersLabel.Size = UDim2.new(1, 0, 0.33, 0)
+PlayersLabel.Position = UDim2.new(0, 0, 0, 0)
 
-FavouritesLabel.Parent = PlayerStats
-FavouritesLabel.Text = "Favourites: 105.25K"
-FavouritesLabel.Size = UDim2.new(1, 0, 0.3, 0)
-FavouritesLabel.Position = UDim2.new(0, 0, 0.3, 0)
-FavouritesLabel.TextColor3 = Color3.fromRGB(200, 200, 200)
-FavouritesLabel.TextSize = 16
+FavoritesLabel.Parent = PlayerStatsFrame
+FavoritesLabel.Text = "Favorites: 105.25K"
+FavoritesLabel.Font = Enum.Font.SourceSans
+FavoritesLabel.TextSize = 18
+FavoritesLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+FavoritesLabel.Size = UDim2.new(1, 0, 0.33, 0)
+FavoritesLabel.Position = UDim2.new(0, 0, 0.33, 0)
 
-UptimeLabel.Parent = PlayerStats
+UptimeLabel.Parent = PlayerStatsFrame
 UptimeLabel.Text = "Uptime: 15h 31m"
-UptimeLabel.Size = UDim2.new(1, 0, 0.3, 0)
-UptimeLabel.Position = UDim2.new(0, 0, 0.6, 0)
-UptimeLabel.TextColor3 = Color3.fromRGB(200, 200, 200)
-UptimeLabel.TextSize = 16
+UptimeLabel.Font = Enum.Font.SourceSans
+UptimeLabel.TextSize = 18
+UptimeLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+UptimeLabel.Size = UDim2.new(1, 0, 0.33, 0)
+UptimeLabel.Position = UDim2.new(0, 0, 0.66, 0)
 
 -- Admin List Frame
-AdminList.Parent = Frame
-AdminList.Size = UDim2.new(0, 200, 0, 200)
-AdminList.Position = UDim2.new(0.05, 0, 0.4, 0)
-AdminList.CanvasSize = UDim2.new(0, 0, 2, 0)
+AdminListFrame.Parent = MainFrame
+AdminListFrame.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+AdminListFrame.Size = UDim2.new(0, 300, 0, 300)
+AdminListFrame.Position = UDim2.new(0.05, 0, 0.4, 0)
+
+AdminTitleLabel.Parent = AdminListFrame
+AdminTitleLabel.Text = "ADMINISTRATORS"
+AdminTitleLabel.Font = Enum.Font.SourceSansBold
+AdminTitleLabel.TextSize = 18
+AdminTitleLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+AdminTitleLabel.Size = UDim2.new(1, 0, 0.1, 0)
+AdminTitleLabel.Position = UDim2.new(0, 0, 0, 0)
+
+AdminList.Parent = AdminListFrame
+AdminList.Size = UDim2.new(1, 0, 0.9, 0)
+AdminList.Position = UDim2.new(0, 0, 0.1, 0)
+AdminList.CanvasSize = UDim2.new(0, 0, 1, 0)
 AdminList.ScrollBarThickness = 6
 
--- Add Admin Labels
+AdminTemplate.Size = UDim2.new(1, 0, 0, 30)
+AdminTemplate.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
+
+AdminNameLabel.Parent = AdminTemplate
+AdminNameLabel.Size = UDim2.new(0.7, 0, 1, 0)
+AdminNameLabel.Position = UDim2.new(0, 0, 0, 0)
+AdminNameLabel.Text = "Admin Name"
+AdminNameLabel.Font = Enum.Font.SourceSans
+AdminNameLabel.TextSize = 16
+AdminNameLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+
+AdminRoleLabel.Parent = AdminTemplate
+AdminRoleLabel.Size = UDim2.new(0.3, 0, 1, 0)
+AdminRoleLabel.Position = UDim2.new(0.7, 0, 0, 0)
+AdminRoleLabel.Text = "Role"
+AdminRoleLabel.Font = Enum.Font.SourceSans
+AdminRoleLabel.TextSize = 16
+AdminRoleLabel.TextColor3 = Color3.fromRGB(200, 200, 200)
+
+-- Populate Admin List
 for i = 1, 5 do
-    local AdminLabel = AdminLabelTemplate:Clone()
-    AdminLabel.Parent = AdminList
-    AdminLabel.Text = "Admin " .. i .. " - Role"
-    AdminLabel.Position = UDim2.new(0, 0, (i - 1) * 0.2, 0)
+    local AdminItem = AdminTemplate:Clone()
+    AdminItem.Parent = AdminList
+    AdminItem.AdminNameLabel.Text = "Admin " .. i
+    AdminItem.AdminRoleLabel.Text = "Role " .. i
 end
 
-AdminLabelTemplate.Parent = nil
-AdminLabelTemplate.Size = UDim2.new(1, 0, 0.2, 0)
-AdminLabelTemplate.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
-AdminLabelTemplate.TextColor3 = Color3.fromRGB(200, 200, 200)
-AdminLabelTemplate.TextSize = 14
-
 -- Messages Frame
-MessagesFrame.Parent = Frame
+MessagesFrame.Parent = MainFrame
+MessagesFrame.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
 MessagesFrame.Size = UDim2.new(0, 300, 0, 100)
-MessagesFrame.Position = UDim2.new(0.5, 0, 0.8, 0)
-MessagesFrame.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
+MessagesFrame.Position = UDim2.new(0.6, 0, 0.8, 0)
 
-MessageTitle.Parent = MessagesFrame
-MessageTitle.Size = UDim2.new(1, 0, 0.3, 0)
-MessageTitle.Text = "Message Title"
-MessageTitle.TextColor3 = Color3.fromRGB(255, 255, 255)
-MessageTitle.TextSize = 16
+MessageTitleLabel.Parent = MessagesFrame
+MessageTitleLabel.Text = "Message Title"
+MessageTitleLabel.Font = Enum.Font.SourceSansBold
+MessageTitleLabel.TextSize = 18
+MessageTitleLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+MessageTitleLabel.Size = UDim2.new(1, 0, 0.3, 0)
+MessageTitleLabel.Position = UDim2.new(0, 0, 0, 0)
 
-MessageContent.Parent = MessagesFrame
-MessageContent.Size = UDim2.new(1, 0, 0.7, 0)
-MessageContent.Position = UDim2.new(0, 0, 0.3, 0)
-MessageContent.Text = "No admin messages. Be the first to send one!"
-MessageContent.TextColor3 = Color3.fromRGB(200, 200, 200)
-MessageContent.TextSize = 14
-MessageContent.TextWrapped = true
-MessageContent.TextXAlignment = Enum.TextXAlignment.Left
-MessageContent.TextYAlignment = Enum.TextYAlignment.Top
+MessageContentLabel.Parent = MessagesFrame
+MessageContentLabel.Text = "No admin messages. Be the first to send one!"
+MessageContentLabel.Font = Enum.Font.SourceSans
+MessageContentLabel.TextSize = 16
+MessageContentLabel.TextColor3 = Color3.fromRGB(200, 200, 200)
+MessageContentLabel.Size = UDim2.new(1, 0, 0.7, 0)
+MessageContentLabel.Position = UDim2.new(0, 0, 0.3, 0)
+MessageContentLabel.TextWrapped = true
