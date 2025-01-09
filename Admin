@@ -1,7 +1,13 @@
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
+
+ประกาศ
 local announceEvent = ReplicatedStorage:FindFirstChild("AnnounceEvent") or Instance.new("RemoteEvent", ReplicatedStorage)
 announceEvent.Name = "AnnounceEvent"
 local players = game:GetService(Players)
+
+วาป
+local teleportEvent = ReplicatedStorage:FindFirstChild("TeleportToPlayerEvent") or Instance.new("RemoteEvent", ReplicatedStorage)
+teleportEvent.Name = "TeleportToPlayerEvent"
 
 -- สร้าง GUI
 local ScreenGui = Instance.new("ScreenGui")
@@ -124,8 +130,15 @@ BanButton.MouseButton1Click:Connect(function()
 end)
 
 TeleportButton.MouseButton1Click:Connect(function()
-    -- Implement teleport logic
+    local targetPlayerName = playerInput.Text
+    if targetPlayerName and targetPlayerName ~= "" then
+        -- เรียกใช้งาน RemoteEvent
+        teleportEvent:FireServer(targetPlayerName)
+    else
+        warn("Please enter a valid player name.")
+    end
 end)
+
 
 BringButton.MouseButton1Click:Connect(function()
     -- Implement bring logic
