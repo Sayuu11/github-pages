@@ -1,0 +1,23 @@
+local players = game:GetService("Players")
+
+local HightlightColor = Color3.fromRGB(255, 0, 0)
+local HighlightOutline = Color3.new(0, 0, 255)
+
+local function highlightPlayer(player)
+  local Highlight = Instance.new("Highlight")
+  Highlight.Parent = player.Character
+  Highlight.FillColor = Color3.fromRGB(255, 0, 0)
+  Highlight.OutlineColor = Color3.new(0, 0, 255)
+
+end
+
+
+    
+while wait(1) do
+
+	for _, player in ipairs(players:GetChildren()) do
+	highlightPlayer(player)
+
+   end
+end
+	
