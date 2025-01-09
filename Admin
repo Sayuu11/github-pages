@@ -1,3 +1,8 @@
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local announceEvent = ReplicatedStorage:FindFirstChild("AnnounceEvent") or Instance.new("RemoteEvent", ReplicatedStorage)
+announceEvent.Name = "AnnounceEvent"
+local players = game:GetService(Players)
+
 -- สร้าง GUI
 local ScreenGui = Instance.new("ScreenGui")
 local AdminPanel = Instance.new("Frame")
@@ -137,5 +142,9 @@ end)
 
 AnnounceButton.MouseButton1Click:Connect(function()
     local message = AnnounceInput.Text
-    game.ReplicatedStorage.AnnounceEvent:FireAllClients(message)
+    if message and message ~= "" then
+        announceEvent:FireAllClients(message)
+    else
+        warn("Please enter a message before announcing.")
+    end
 end)
