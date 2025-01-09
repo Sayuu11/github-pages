@@ -1,135 +1,141 @@
--- GUI Creation Script
+-- สร้าง GUI
 local ScreenGui = Instance.new("ScreenGui")
-local MainFrame = Instance.new("Frame")
+local AdminPanel = Instance.new("Frame")
 local WelcomeLabel = Instance.new("TextLabel")
-local PlayerStatsFrame = Instance.new("Frame")
-local PlayersLabel = Instance.new("TextLabel")
-local FavoritesLabel = Instance.new("TextLabel")
-local UptimeLabel = Instance.new("TextLabel")
-local AdminListFrame = Instance.new("Frame")
-local AdminTitleLabel = Instance.new("TextLabel")
-local AdminList = Instance.new("ScrollingFrame")
-local AdminTemplate = Instance.new("Frame")
-local AdminNameLabel = Instance.new("TextLabel")
-local AdminRoleLabel = Instance.new("TextLabel")
-local MessagesFrame = Instance.new("Frame")
-local MessageTitleLabel = Instance.new("TextLabel")
-local MessageContentLabel = Instance.new("TextLabel")
+local UsernameInput = Instance.new("TextBox")
+local ActionsFrame = Instance.new("Frame")
+local KickButton = Instance.new("TextButton")
+local BanButton = Instance.new("TextButton")
+local TeleportButton = Instance.new("TextButton")
+local BringButton = Instance.new("TextButton")
+local JailButton = Instance.new("TextButton")
+local UnbanButton = Instance.new("TextButton")
+local WarnInput = Instance.new("TextBox")
+local WarnButton = Instance.new("TextButton")
+local AnnounceInput = Instance.new("TextBox")
+local AnnounceButton = Instance.new("TextButton")
 
--- Parent to PlayerGui
+-- Parent GUI to PlayerGui
 ScreenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
 
--- Main Frame
-MainFrame.Parent = ScreenGui
-MainFrame.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
-MainFrame.Size = UDim2.new(0, 800, 0, 500)
-MainFrame.Position = UDim2.new(0.5, -400, 0.5, -250)
+-- GUI Properties
+ScreenGui.Name = "AdminPanelGUI"
 
--- Welcome Label
-WelcomeLabel.Parent = MainFrame
-WelcomeLabel.Text = "Welcome Back, Admin"
+AdminPanel.Parent = ScreenGui
+AdminPanel.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
+AdminPanel.Size = UDim2.new(0, 400, 0, 500)
+AdminPanel.Position = UDim2.new(0.5, -200, 0.5, -250)
+
+WelcomeLabel.Parent = AdminPanel
+WelcomeLabel.Text = "Welcome, Admin"
 WelcomeLabel.Font = Enum.Font.SourceSansBold
 WelcomeLabel.TextSize = 24
 WelcomeLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
-WelcomeLabel.Size = UDim2.new(0, 400, 0, 50)
-WelcomeLabel.Position = UDim2.new(0.05, 0, 0.05, 0)
+WelcomeLabel.Size = UDim2.new(1, 0, 0, 50)
+WelcomeLabel.Position = UDim2.new(0, 0, 0, 0)
 
--- Player Stats Frame
-PlayerStatsFrame.Parent = MainFrame
-PlayerStatsFrame.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
-PlayerStatsFrame.Size = UDim2.new(0, 300, 0, 100)
-PlayerStatsFrame.Position = UDim2.new(0.05, 0, 0.2, 0)
+UsernameInput.Parent = AdminPanel
+UsernameInput.PlaceholderText = "Enter player username..."
+UsernameInput.Font = Enum.Font.SourceSans
+UsernameInput.TextSize = 18
+UsernameInput.TextColor3 = Color3.fromRGB(0, 0, 0)
+UsernameInput.Size = UDim2.new(0.9, 0, 0, 30)
+UsernameInput.Position = UDim2.new(0.05, 0, 0.1, 0)
+UsernameInput.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 
-PlayersLabel.Parent = PlayerStatsFrame
-PlayersLabel.Text = "Players: 25"
-PlayersLabel.Font = Enum.Font.SourceSans
-PlayersLabel.TextSize = 18
-PlayersLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
-PlayersLabel.Size = UDim2.new(1, 0, 0.33, 0)
-PlayersLabel.Position = UDim2.new(0, 0, 0, 0)
+ActionsFrame.Parent = AdminPanel
+ActionsFrame.Size = UDim2.new(1, 0, 0.5, 0)
+ActionsFrame.Position = UDim2.new(0, 0, 0.2, 0)
 
-FavoritesLabel.Parent = PlayerStatsFrame
-FavoritesLabel.Text = "Favorites: 105.25K"
-FavoritesLabel.Font = Enum.Font.SourceSans
-FavoritesLabel.TextSize = 18
-FavoritesLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
-FavoritesLabel.Size = UDim2.new(1, 0, 0.33, 0)
-FavoritesLabel.Position = UDim2.new(0, 0, 0.33, 0)
-
-UptimeLabel.Parent = PlayerStatsFrame
-UptimeLabel.Text = "Uptime: 15h 31m"
-UptimeLabel.Font = Enum.Font.SourceSans
-UptimeLabel.TextSize = 18
-UptimeLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
-UptimeLabel.Size = UDim2.new(1, 0, 0.33, 0)
-UptimeLabel.Position = UDim2.new(0, 0, 0.66, 0)
-
--- Admin List Frame
-AdminListFrame.Parent = MainFrame
-AdminListFrame.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
-AdminListFrame.Size = UDim2.new(0, 300, 0, 300)
-AdminListFrame.Position = UDim2.new(0.05, 0, 0.4, 0)
-
-AdminTitleLabel.Parent = AdminListFrame
-AdminTitleLabel.Text = "ADMINISTRATORS"
-AdminTitleLabel.Font = Enum.Font.SourceSansBold
-AdminTitleLabel.TextSize = 18
-AdminTitleLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
-AdminTitleLabel.Size = UDim2.new(1, 0, 0.1, 0)
-AdminTitleLabel.Position = UDim2.new(0, 0, 0, 0)
-
-AdminList.Parent = AdminListFrame
-AdminList.Size = UDim2.new(1, 0, 0.9, 0)
-AdminList.Position = UDim2.new(0, 0, 0.1, 0)
-AdminList.CanvasSize = UDim2.new(0, 0, 1, 0)
-AdminList.ScrollBarThickness = 6
-
-AdminTemplate.Size = UDim2.new(1, 0, 0, 30)
-AdminTemplate.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
-
-AdminNameLabel.Parent = AdminTemplate
-AdminNameLabel.Size = UDim2.new(0.7, 0, 1, 0)
-AdminNameLabel.Position = UDim2.new(0, 0, 0, 0)
-AdminNameLabel.Text = "Admin Name"
-AdminNameLabel.Font = Enum.Font.SourceSans
-AdminNameLabel.TextSize = 16
-AdminNameLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
-
-AdminRoleLabel.Parent = AdminTemplate
-AdminRoleLabel.Size = UDim2.new(0.3, 0, 1, 0)
-AdminRoleLabel.Position = UDim2.new(0.7, 0, 0, 0)
-AdminRoleLabel.Text = "Role"
-AdminRoleLabel.Font = Enum.Font.SourceSans
-AdminRoleLabel.TextSize = 16
-AdminRoleLabel.TextColor3 = Color3.fromRGB(200, 200, 200)
-
--- Populate Admin List
-for i = 1, 5 do
-    local AdminItem = AdminTemplate:Clone()
-    AdminItem.Parent = AdminList
-    AdminItem.AdminNameLabel.Text = "Admin " .. i
-    AdminItem.AdminRoleLabel.Text = "Role " .. i
+-- Create Action Buttons
+local function createButton(name, text, pos)
+    local button = Instance.new("TextButton")
+    button.Parent = ActionsFrame
+    button.Name = name
+    button.Text = text
+    button.Font = Enum.Font.SourceSans
+    button.TextSize = 18
+    button.Size = UDim2.new(0.45, 0, 0.2, 0)
+    button.Position = pos
+    button.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+    button.TextColor3 = Color3.fromRGB(255, 255, 255)
+    return button
 end
 
--- Messages Frame
-MessagesFrame.Parent = MainFrame
-MessagesFrame.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
-MessagesFrame.Size = UDim2.new(0, 300, 0, 100)
-MessagesFrame.Position = UDim2.new(0.6, 0, 0.8, 0)
+KickButton = createButton("KickButton", "Kick", UDim2.new(0.05, 0, 0, 0))
+BanButton = createButton("BanButton", "Ban", UDim2.new(0.5, 0, 0, 0))
+TeleportButton = createButton("TeleportButton", "Teleport", UDim2.new(0.05, 0, 0.25, 0))
+BringButton = createButton("BringButton", "Bring", UDim2.new(0.5, 0, 0.25, 0))
+JailButton = createButton("JailButton", "Jail", UDim2.new(0.05, 0, 0.5, 0))
+UnbanButton = createButton("UnbanButton", "Unban", UDim2.new(0.5, 0, 0.5, 0))
 
-MessageTitleLabel.Parent = MessagesFrame
-MessageTitleLabel.Text = "Message Title"
-MessageTitleLabel.Font = Enum.Font.SourceSansBold
-MessageTitleLabel.TextSize = 18
-MessageTitleLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
-MessageTitleLabel.Size = UDim2.new(1, 0, 0.3, 0)
-MessageTitleLabel.Position = UDim2.new(0, 0, 0, 0)
+-- Warn Input & Button
+WarnInput.Parent = AdminPanel
+WarnInput.PlaceholderText = "Warn Message..."
+WarnInput.Font = Enum.Font.SourceSans
+WarnInput.TextSize = 18
+WarnInput.Size = UDim2.new(0.6, 0, 0, 30)
+WarnInput.Position = UDim2.new(0.05, 0, 0.75, 0)
+WarnInput.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 
-MessageContentLabel.Parent = MessagesFrame
-MessageContentLabel.Text = "No admin messages. Be the first to send one!"
-MessageContentLabel.Font = Enum.Font.SourceSans
-MessageContentLabel.TextSize = 16
-MessageContentLabel.TextColor3 = Color3.fromRGB(200, 200, 200)
-MessageContentLabel.Size = UDim2.new(1, 0, 0.7, 0)
-MessageContentLabel.Position = UDim2.new(0, 0, 0.3, 0)
-MessageContentLabel.TextWrapped = true
+WarnButton.Parent = AdminPanel
+WarnButton.Text = "Warn"
+WarnButton.Font = Enum.Font.SourceSans
+WarnButton.TextSize = 18
+WarnButton.Size = UDim2.new(0.3, 0, 0, 30)
+WarnButton.Position = UDim2.new(0.65, 0, 0.75, 0)
+WarnButton.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+WarnButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+
+-- Announce Input & Button
+AnnounceInput.Parent = AdminPanel
+AnnounceInput.PlaceholderText = "Notification Message..."
+AnnounceInput.Font = Enum.Font.SourceSans
+AnnounceInput.TextSize = 18
+AnnounceInput.Size = UDim2.new(0.9, 0, 0, 30)
+AnnounceInput.Position = UDim2.new(0.05, 0, 0.85, 0)
+AnnounceInput.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+
+AnnounceButton.Parent = AdminPanel
+AnnounceButton.Text = "Announce"
+AnnounceButton.Font = Enum.Font.SourceSans
+AnnounceButton.TextSize = 18
+AnnounceButton.Size = UDim2.new(0.9, 0, 0, 30)
+AnnounceButton.Position = UDim2.new(0.05, 0, 0.9, 0)
+AnnounceButton.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+AnnounceButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+
+-- Scripts for Buttons
+KickButton.MouseButton1Click:Connect(function()
+    local playerName = UsernameInput.Text
+    local player = game.Players:FindFirstChild(playerName)
+    if player then
+        player:Kick("You have been kicked by an admin.")
+    end
+end)
+
+BanButton.MouseButton1Click:Connect(function()
+    -- Implement ban logic
+end)
+
+TeleportButton.MouseButton1Click:Connect(function()
+    -- Implement teleport logic
+end)
+
+BringButton.MouseButton1Click:Connect(function()
+    -- Implement bring logic
+end)
+
+JailButton.MouseButton1Click:Connect(function()
+    -- Implement jail logic
+end)
+
+WarnButton.MouseButton1Click:Connect(function()
+    local warnMessage = WarnInput.Text
+    -- Broadcast warning to player
+end)
+
+AnnounceButton.MouseButton1Click:Connect(function()
+    local message = AnnounceInput.Text
+    game.ReplicatedStorage.AnnounceEvent:FireAllClients(message)
+end)
