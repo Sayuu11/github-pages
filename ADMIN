@@ -1,0 +1,46 @@
+-- สร้าง ScreenGui และ Frame
+local player = game.Players.LocalPlayer
+local playerGui = player:WaitForChild("PlayerGui")
+
+local screenGui = Instance.new("ScreenGui")
+screenGui.Parent = playerGui
+
+local frame = Instance.new("Frame")
+frame.Size = UDim2.new(0.3, 0, 0.5, 0)
+frame.Position = UDim2.new(0.35, 0, 0.25, 0)
+frame.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+frame.Parent = screenGui
+
+-- สร้าง Title
+local title = Instance.new("TextLabel")
+title.Size = UDim2.new(1, 0, 0.1, 0)
+title.Text = "Admin Panel"
+title.TextColor3 = Color3.fromRGB(255, 255, 255)
+title.TextSize = 24
+title.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+title.Parent = frame
+
+-- สร้างปุ่มสำหรับคำสั่งต่าง ๆ
+local kickButton = Instance.new("TextButton")
+kickButton.Size = UDim2.new(0.8, 0, 0.1, 0)
+kickButton.Position = UDim2.new(0.1, 0, 0.2, 0)
+kickButton.Text = "Kick Player"
+kickButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+kickButton.BackgroundColor3 = Color3.fromRGB(200, 50, 50)
+kickButton.Parent = frame
+
+local banButton = Instance.new("TextButton")
+banButton.Size = UDim2.new(0.8, 0, 0.1, 0)
+banButton.Position = UDim2.new(0.1, 0, 0.4, 0)
+banButton.Text = "Ban Player"
+banButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+banButton.BackgroundColor3 = Color3.fromRGB(200, 50, 50)
+banButton.Parent = frame
+
+local closeButton = Instance.new("TextButton")
+closeButton.Size = UDim2.new(0.8, 0, 0.1, 0)
+closeButton.Position = UDim2.new(0.1, 0, 0.6, 0)
+closeButton.Text = "Close Panel"
+closeButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+closeButton.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+closeButton.Parent = frame
