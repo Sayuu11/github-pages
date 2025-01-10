@@ -1,0 +1,18 @@
+local Players = game:GetService("Players")
+
+local function CheckUsers(player)
+	local Users = Players:GetChildren("mmxr11in").Name
+
+	if Users == "mmxr11in" then
+	print(Users)
+	print("Passed")
+	else
+		print("Not Passed")
+		print(Users)
+
+   end
+end
+
+for _, player in ipairs(Players:GetChildren()) do
+	CheckUsers(player)
+end
