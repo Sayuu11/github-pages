@@ -43,14 +43,47 @@ Rayfield:Notify({
    Content = "Nice bro🧠",
    Duration = 6.5,
    Image = nil,
-   Actions = {
-	   Ignore = {
-		   Name = "OK.",
-		   Callback = function()
-		   print("Users tabbed OK.")
-		   end
-	   },
-   },
+})
+
+local Button = MainTab:CreateButton({
+   Name = "Infinite Jump", 
+   Callback = function()
+
+_G.infinjump = not _G.infinjump
+
+   if _G.infinJumpStarted == nil then
+	   _G.infinJumpStarted = true
+
+   ---notifi
+   game.StarterGui:SetCore("SendNotification", {Title="Sayuu Hub"; Text="Infinite Jump Activated!"; Duration=5;})
+
+   --code
+   local plr = game:GetService("Players").LocalPlayer
+   local m = plr:GetMouse()
+   m.KeyDown:Connect(function(k)
+       if _G.infinjump then
+		  if k:byte() == 32 then
+			  humanoid = game:GetService("Players").LocalPlayer.Character:FindFirstChildOfClass("Humanoid")
+			  humanoid:ChangeState("Jumping")
+			  wait()
+			  humanoid:ChangeState("Seated")
+		  end 
+	   end
+   end)
+end  
+   end,
+})
+
+local Slider = MainTab:CreateSlider({
+   Name = "Walkspeed Slider",
+   Range = {0, 300},
+   Increment = 1,
+   Suffix = "Speed",
+   CurrentValue = 16,
+   Flag = "Slider1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+   Callback = function(Value)
+		game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = (Value)
+   end,
 })
 
 end
