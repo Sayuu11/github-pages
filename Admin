@@ -35,6 +35,8 @@ if game.PlaceId == 18668065416 then
    }
 })
 
+-- Main Tab
+
 local MainTab = Window:CreateTab("🏠Home", nil)
 local MainSection = MainTab:CreateSection("Main")
 
@@ -45,9 +47,11 @@ Rayfield:Notify({
    Image = nil,
 })
 
-local Button = MainTab:CreateButton({
-   Name = "Infinite Jump", 
-   Callback = function()
+local InfiniteJumpToggle = MainTab:CreateToggle({
+   Name = "Infinite Jump",
+   CurrentValue = 32,
+   Flag = "Infinite Jump", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+   Callback = function(Value)
 
 _G.infinjump = not _G.infinjump
 
@@ -85,5 +89,26 @@ local Slider = MainTab:CreateSlider({
 		game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = (Value)
    end,
 })
+
+-- Teleport Tab
+
+local TeleportTab = Window:CreateTab("🌌Teleports", nil)
+local TeleportSection = TeleportTab:CreateSection("Places")
+
+local Dropdown = TeleportTab:CreateDropdown({
+   Name = "Select Area",
+   Options = {"Option 1","Option 2"},
+   CurrentOption = {"Option 1"},
+   MultipleOptions = false,
+   Flag = "Teleport", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+   Callback = function(Options)
+		print(Options)
+   end,
+})
+
+-- Misc Tab
+
+local MiscTab = Window:CreateTab("🎲Misc", nil)
+local MiscSection = MiscTab:CreateSection("Settings")
 
 end
