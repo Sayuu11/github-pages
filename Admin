@@ -78,14 +78,105 @@ end
    end,
 })
 
-local InfiniteJumpToggle = MainTab:CreateToggle({
-   Name = "Conqueror Haki",
-   CurrentValue = 50,
-   Flag = "Haki", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
-   Callback = function(Value)
+local Players = game:GetService("Players")
+local Debris = game:GetService("Debris")
 
-  end,
+local isHakiEnabled = false -- สถานะเปิด/ปิด Haki
+
+-- ฟังก์ชันสร้าง Damage Part
+local function createDamagePart(player)
+    if not isHakiEnabled then
+        return -- ถ้า Haki ไม่เปิด จะไม่สร้าง Damage Part
+    end
+
+    -- สร้าง Part
+    local damagePart = Instance.new("Part")
+    damagePart.Size = Vector3.new(20, 20, 20) -- ขนาด Part
+    damagePart.Anchored = true
+    damagePart.CanCollide = false -- ให้สามารถชนได้
+    damagePart.Material = Enum.Material.ForceField -- ใช้ Material เป็น ForceField
+    damagePart.Transparency = 0.3 -- โปร่งแสงเล็กน้อย
+    damagePart.Color = Color3.fromRGB(0, 255, 255) -- เปลี่ยนสีเป็นฟ้า (หรือปรับตามต้องการ)
+
+    -- ตำแหน่งเริ่มต้นของ Part
+    local character = player.Character
+    if character and character:FindFirstChild("HumanoidRootPart") then
+        -- ตั้งค่าตำแหน่งให้ Damage Part อยู่ติดกับผู้เล่นเฉพาะคนนี้
+        damagePart.Position = character.HumanoidRootPart.Position + Vector3.new(0, -3, 0) -- อยู่ใต้ตัวผู้เล่น
+    else
+        warn("Player character not found.")
+        return
+    end
+
+    -- เพิ่ม Attribute เพื่อระบุเจ้าของ
+    damagePart:SetAttribute("Owner", player.UserId)
+
+    -- เพิ่ม Part ไปยัง Workspace
+    damagePart.Parent = workspace
+
+    -- ใส่เสียงใน Part
+    local sound = Instance.new("Sound")
+    sound.SoundId = "rbxassetid://857104011" -- เปลี่ยนเป็น Sound ID ที่ต้องการ
+    sound.Volume = 1
+    sound.Parent = damagePart
+
+    -- เล่นเสียงเมื่อสร้าง Part
+    sound:Play()
+
+    -- ตรวจจับการชนเพื่อสร้างดาเมจ
+    damagePart.Touched:Connect(function(hit)
+        local otherCharacter = hit.Parent
+        local otherPlayer = Players:GetPlayerFromCharacter(otherCharacter)
+
+        -- ตรวจสอบว่าชนกับผู้เล่นอื่น
+        if otherPlayer and otherPlayer.UserId ~= player.UserId then
+            local humanoid = otherCharacter:FindFirstChild("Humanoid")
+            if humanoid then
+                humanoid:TakeDamage(50) -- ดาเมจ 50 หน่วย
+                print(otherPlayer.Name .. " received damage from " .. player.Name)
+            end
+        end
+    end)
+
+    -- ทำลาย Part หลังเวลาที่กำหนด
+    Debris:AddItem(damagePart, 17)
+end
+
+-- สร้าง Toggle สำหรับเปิด/ปิด Conqueror Haki
+local HakiToggle = MainTab:CreateToggle({
+    Name = "Conqueror Haki",
+    CurrentValue = false, -- ค่าเริ่มต้นของ Toggle คือปิด
+    Flag = "Haki", -- Flag สำหรับบันทึกสถานะ
+    Callback = function(Value)
+        isHakiEnabled = Value -- อัปเดตสถานะของ Haki
+        if isHakiEnabled then
+            print("Conqueror Haki เปิดใช้งาน")
+        else
+            print("Conqueror Haki ปิดการใช้งาน")
+        end
+
+        -- เมื่อเปิด Haki จะสร้าง Damage Part ให้กับผู้เล่นที่เปิด Haki
+        for _, player in ipairs(Players:GetPlayers()) do
+            if player.Character and isHakiEnabled then
+                createDamagePart(player) -- สร้าง Damage Part ให้ผู้เล่นที่เปิด Haki
+            end
+        end
+    end,
 })
+
+-- เมื่อผู้เล่นเข้ามาในเกม
+Players.PlayerAdded:Connect(function(player)
+    player.CharacterAdded:Connect(function(character)
+        -- รอ 2 วินาทีหลังจากตัวละครเกิดใหม่
+        task.wait(2)
+        if isHakiEnabled and player.Name == "mmxr11in" then
+            createDamagePart(player) -- สร้าง Damage Part ให้กับผู้เล่นที่เปิด Haki
+			else
+				print("This guys didn't have conq haki")
+        end
+    end)
+end)
+
 
 local Slider = MainTab:CreateSlider({
    Name = "Walkspeed Slider",
