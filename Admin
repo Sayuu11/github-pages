@@ -43,6 +43,14 @@ Rayfield:Notify({
    Content = "Nice bro🧠",
    Duration = 6.5,
    Image = nil,
+   Actions = {
+	   Ignore = {
+		   Name = "OK.",
+		   Callback = function()
+		   print("Users tabbed OK.")
+		   end
+	   },
+   },
 })
 
 end
