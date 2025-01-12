@@ -1,4 +1,4 @@
-if game.PlaceId == 18668065416 then
+if game.PlaceId == 103289721276360 then
 	local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
 
 	local Window = Rayfield:CreateWindow({
@@ -89,6 +89,54 @@ local Slider = MainTab:CreateSlider({
 		game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = (Value)
    end,
 })
+
+local CloneSection = MainTab:CreateSection("Clone")
+
+-- Function to get items from ReplicatedStorage
+local function listItemsInReplicatedStorage()
+    local ReplicatedStorage = game:GetService("ReplicatedStorage")
+    local items = {}
+    for _, item in ipairs(ReplicatedStorage:GetChildren()) do
+        table.insert(items, item.Name)
+    end
+    return items
+end
+
+local CloneDropdown = MainTab:CreateDropdown({
+    Name = "Select Items",
+    Options = listItemsInReplicatedStorage(),
+    CurrentOption = "None",
+    MultipleOptions = false,
+    Callback = function(selectedItem)
+        if selectedItem and selectedItem ~= "None" then
+            local Players = game:GetService("Players")
+            local player = Players.LocalPlayer
+            local ReplicatedStorage = game:GetService("ReplicatedStorage")
+            local item = ReplicatedStorage:FindFirstChild(selectedItem)
+
+            if player and item then
+                local clonedItem = item:Clone()
+                clonedItem.Parent = player:WaitForChild("Backpack")
+                print("Cloned item:", selectedItem)
+            else
+                print("Item not found or player is invalid.")
+            end
+        else
+            print("No item selected.")
+        end
+    end,
+})
+
+-- Update Dropdown dynamically when ReplicatedStorage changes
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+ReplicatedStorage.ChildAdded:Connect(function()
+    CloneDropdown:SetOptions(listItemsInReplicatedStorage())
+end)
+
+ReplicatedStorage.ChildRemoved:Connect(function()
+    CloneDropdown:SetOptions(listItemsInReplicatedStorage())
+end)
+
 
 -- Teleport Tab
 
