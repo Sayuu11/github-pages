@@ -1,163 +1,37 @@
-local ReplicatedStorage = game:GetService("ReplicatedStorage")
+if game.PlaceId == 18668065416 then
+	local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
 
-ประกาศ
-local announceEvent = ReplicatedStorage:FindFirstChild("AnnounceEvent") or Instance.new("RemoteEvent", ReplicatedStorage)
-announceEvent.Name = "AnnounceEvent"
-local players = game:GetService(Players)
+	local Window = Rayfield:CreateWindow({
+   Name = "Sayuu HUB🐇",
+   Icon = 0, 
+   LoadingTitle = "Welcome to Sayuu HUB🥶",
+   LoadingSubtitle = "by Sayuu",
+   Theme = "Default", -- Check https://docs.sirius.menu/rayfield/configuration/themes
 
-วาป
-local teleportEvent = ReplicatedStorage:FindFirstChild("TeleportToPlayerEvent") or Instance.new("RemoteEvent", ReplicatedStorage)
-teleportEvent.Name = "TeleportToPlayerEvent"
+   DisableRayfieldPrompts = false,
+   DisableBuildWarnings = false, -- Prevents Rayfield from warning when the script has a version mismatch with the interface
 
--- สร้าง GUI
-local ScreenGui = Instance.new("ScreenGui")
-local AdminPanel = Instance.new("Frame")
-local WelcomeLabel = Instance.new("TextLabel")
-local UsernameInput = Instance.new("TextBox")
-local ActionsFrame = Instance.new("Frame")
-local KickButton = Instance.new("TextButton")
-local BanButton = Instance.new("TextButton")
-local TeleportButton = Instance.new("TextButton")
-local BringButton = Instance.new("TextButton")
-local JailButton = Instance.new("TextButton")
-local UnbanButton = Instance.new("TextButton")
-local WarnInput = Instance.new("TextBox")
-local WarnButton = Instance.new("TextButton")
-local AnnounceInput = Instance.new("TextBox")
-local AnnounceButton = Instance.new("TextButton")
+   ConfigurationSaving = {
+      Enabled = true,
+      FolderName = "Sayuu", -- Create a custom folder for your hub/game
+      FileName = "Sayuu Hub"
+   },
 
--- Parent GUI to PlayerGui
-ScreenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+   Discord = {
+      Enabled = true, -- Prompt the user to join your Discord server if their executor supports it
+      Invite = "https://discord.gg/ySq94JsXn3", -- The Discord invite code, do not include discord.gg/. E.g. discord.gg/ ABCD would be ABCD
+      RememberJoins = true -- Set this to false to make them join the discord every time they load it up
+   },
 
--- GUI Properties
-ScreenGui.Name = "AdminPanelGUI"
-
-AdminPanel.Parent = ScreenGui
-AdminPanel.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
-AdminPanel.Size = UDim2.new(0, 400, 0, 500)
-AdminPanel.Position = UDim2.new(0.5, -200, 0.5, -250)
-
-WelcomeLabel.Parent = AdminPanel
-WelcomeLabel.Text = "Welcome, Admin"
-WelcomeLabel.Font = Enum.Font.SourceSansBold
-WelcomeLabel.TextSize = 24
-WelcomeLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
-WelcomeLabel.Size = UDim2.new(1, 0, 0, 50)
-WelcomeLabel.Position = UDim2.new(0, 0, 0, 0)
-
-UsernameInput.Parent = AdminPanel
-UsernameInput.PlaceholderText = "Enter player username..."
-UsernameInput.Font = Enum.Font.SourceSans
-UsernameInput.TextSize = 18
-UsernameInput.TextColor3 = Color3.fromRGB(0, 0, 0)
-UsernameInput.Size = UDim2.new(0.9, 0, 0, 30)
-UsernameInput.Position = UDim2.new(0.05, 0, 0.1, 0)
-UsernameInput.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-
-ActionsFrame.Parent = AdminPanel
-ActionsFrame.Size = UDim2.new(1, 0, 0.5, 0)
-ActionsFrame.Position = UDim2.new(0, 0, 0.2, 0)
-
--- Create Action Buttons
-local function createButton(name, text, pos)
-    local button = Instance.new("TextButton")
-    button.Parent = ActionsFrame
-    button.Name = name
-    button.Text = text
-    button.Font = Enum.Font.SourceSans
-    button.TextSize = 18
-    button.Size = UDim2.new(0.45, 0, 0.2, 0)
-    button.Position = pos
-    button.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
-    button.TextColor3 = Color3.fromRGB(255, 255, 255)
-    return button
+   KeySystem = true, -- Set this to true to use our key system
+   KeySettings = {
+      Title = "Sayuu Hub | Key",
+      Subtitle = "Link in Discord Server",
+      Note = "Join Discord Server from Misc Tab.", -- Use this to tell the user how to get a key
+      FileName = "SayuuHubKey", -- It is recommended to use something unique as other scripts using Rayfield may overwrite your key file
+      SaveKey = false, -- The user's key will be saved, but if you change the key, they will be unable to use your script
+      GrabKeyFromSite = true, -- If this is true, set Key below to the RAW site you would like Rayfield to get the key from
+      Key = {"https://pastebin.com/raw/rQ8u2ywr"} -- List of keys that will be accepted by the system, can be RAW file links (pastebin, github etc) or simple strings ("hello","key22")
+   }
+})
 end
-
-KickButton = createButton("KickButton", "Kick", UDim2.new(0.05, 0, 0, 0))
-BanButton = createButton("BanButton", "Ban", UDim2.new(0.5, 0, 0, 0))
-TeleportButton = createButton("TeleportButton", "Teleport", UDim2.new(0.05, 0, 0.25, 0))
-BringButton = createButton("BringButton", "Bring", UDim2.new(0.5, 0, 0.25, 0))
-JailButton = createButton("JailButton", "Jail", UDim2.new(0.05, 0, 0.5, 0))
-UnbanButton = createButton("UnbanButton", "Unban", UDim2.new(0.5, 0, 0.5, 0))
-
--- Warn Input & Button
-WarnInput.Parent = AdminPanel
-WarnInput.PlaceholderText = "Warn Message..."
-WarnInput.Font = Enum.Font.SourceSans
-WarnInput.TextSize = 18
-WarnInput.Size = UDim2.new(0.6, 0, 0, 30)
-WarnInput.Position = UDim2.new(0.05, 0, 0.75, 0)
-WarnInput.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-
-WarnButton.Parent = AdminPanel
-WarnButton.Text = "Warn"
-WarnButton.Font = Enum.Font.SourceSans
-WarnButton.TextSize = 18
-WarnButton.Size = UDim2.new(0.3, 0, 0, 30)
-WarnButton.Position = UDim2.new(0.65, 0, 0.75, 0)
-WarnButton.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
-WarnButton.TextColor3 = Color3.fromRGB(255, 255, 255)
-
--- Announce Input & Button
-AnnounceInput.Parent = AdminPanel
-AnnounceInput.PlaceholderText = "Notification Message..."
-AnnounceInput.Font = Enum.Font.SourceSans
-AnnounceInput.TextSize = 18
-AnnounceInput.Size = UDim2.new(0.9, 0, 0, 30)
-AnnounceInput.Position = UDim2.new(0.05, 0, 0.85, 0)
-AnnounceInput.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-
-AnnounceButton.Parent = AdminPanel
-AnnounceButton.Text = "Announce"
-AnnounceButton.Font = Enum.Font.SourceSans
-AnnounceButton.TextSize = 18
-AnnounceButton.Size = UDim2.new(0.9, 0, 0, 30)
-AnnounceButton.Position = UDim2.new(0.05, 0, 0.9, 0)
-AnnounceButton.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
-AnnounceButton.TextColor3 = Color3.fromRGB(255, 255, 255)
-
--- Scripts for Buttons
-KickButton.MouseButton1Click:Connect(function()
-    local playerName = UsernameInput.Text
-    local player = game.Players:FindFirstChild(playerName)
-    if player then
-        player:Kick("You have been kicked by an admin.")
-    end
-end)
-
-BanButton.MouseButton1Click:Connect(function()
-    -- Implement ban logic
-end)
-
-TeleportButton.MouseButton1Click:Connect(function()
-    local targetPlayerName = playerInput.Text
-    if targetPlayerName and targetPlayerName ~= "" then
-        -- เรียกใช้งาน RemoteEvent
-        teleportEvent:FireServer(targetPlayerName)
-    else
-        warn("Please enter a valid player name.")
-    end
-end)
-
-
-BringButton.MouseButton1Click:Connect(function()
-    -- Implement bring logic
-end)
-
-JailButton.MouseButton1Click:Connect(function()
-    -- Implement jail logic
-end)
-
-WarnButton.MouseButton1Click:Connect(function()
-    local warnMessage = WarnInput.Text
-    -- Broadcast warning to player
-end)
-
-AnnounceButton.MouseButton1Click:Connect(function()
-    local message = AnnounceInput.Text
-    if message and message ~= "" then
-        announceEvent:FireAllClients(message)
-    else
-        warn("Please enter a message before announcing.")
-    end
-end)
