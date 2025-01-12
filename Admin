@@ -90,51 +90,43 @@ local Slider = MainTab:CreateSlider({
    end,
 })
 
-local CloneSection = MainTab:CreateSection("Clone")
+local ReplicatedCheckerSection = MainTab:CreateSection("🔎Replicated Storage Checker")
 
 -- Function to get items from ReplicatedStorage
 local function listItemsInReplicatedStorage()
     local ReplicatedStorage = game:GetService("ReplicatedStorage")
     local items = {}
+
+    -- Iterate through all items in ReplicatedStorage
     for _, item in ipairs(ReplicatedStorage:GetChildren()) do
         table.insert(items, item.Name)
     end
+
     return items
 end
 
-local CloneDropdown = MainTab:CreateDropdown({
+-- Dropdown to select items from ReplicatedStorage
+local ReplicatedStorageCheckerDropdown = MainTab:CreateDropdown({
     Name = "Select Items",
-    Options = listItemsInReplicatedStorage(),
+    Options = listItemsInReplicatedStorage(), -- Load items dynamically from ReplicatedStorage
     CurrentOption = "None",
     MultipleOptions = false,
     Callback = function(selectedItem)
-        if selectedItem and selectedItem ~= "None" then
-            local Players = game:GetService("Players")
-            local player = Players.LocalPlayer
-            local ReplicatedStorage = game:GetService("ReplicatedStorage")
-            local item = ReplicatedStorage:FindFirstChild(selectedItem)
-
-            if player and item then
-                local clonedItem = item:Clone()
-                clonedItem.Parent = player:WaitForChild("Backpack")
-                print("Cloned item:", selectedItem)
-            else
-                print("Item not found or player is invalid.")
-            end
-        else
-            print("No item selected.")
-        end
+        print("Selected Item:", selectedItem)
+        -- Here, you can do other actions when an item is selected, if needed
     end,
 })
 
 -- Update Dropdown dynamically when ReplicatedStorage changes
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
+
+-- Listen for changes in ReplicatedStorage
 ReplicatedStorage.ChildAdded:Connect(function()
-    CloneDropdown:SetOptions(listItemsInReplicatedStorage())
+    ReplicatedStorageCheckerDropdown:SetOptions(listItemsInReplicatedStorage()) -- Update options when a new item is added
 end)
 
 ReplicatedStorage.ChildRemoved:Connect(function()
-    CloneDropdown:SetOptions(listItemsInReplicatedStorage())
+    ReplicatedStorageCheckerDropdown:SetOptions(listItemsInReplicatedStorage()) -- Update options when an item is removed
 end)
 
 
